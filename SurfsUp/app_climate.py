@@ -1,11 +1,10 @@
 # Import the dependencies.
-from flask import Flask, g, jsonify
-import sqlite3
+from flask import Flask, jsonify
 from sqlalchemy import create_engine, func
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-import datetime as dt
 import os
+import datetime as dt
 from datetime import datetime
 
 #################################################
@@ -72,7 +71,7 @@ def index():
 def precipitation():
     # Calculate the date one year ago from the last date in the database
     last_date = session.query(func.max(measurement.date)).scalar()
-    last_date = dt.datetime.strptime(last_date, '%Y-%m-%d')
+    last_date = datetime.strptime(last_date, '%Y-%m-%d')
     one_year_ago = last_date - dt.timedelta(days=365)
 
     # Query for precipitation data for the last year
@@ -82,10 +81,17 @@ def precipitation():
         .all()
     )
 
-    # Convert the result to a dictionary with date as key and precipitation as value
-    precipitation_dict = {date: prcp for date, prcp in precipitation_data}
+  # Group the results by date
+    grouped_precipitation = {}
+    for date, prcp in precipitation_data:
+        if date not in grouped_precipitation:
+            grouped_precipitation[date] = []
+        grouped_precipitation[date].append(prcp)
 
-    return jsonify(precipitation_dict)
+    # Convert the result to a dictionary with grouped data
+    result_dict = {date: {'prcp_values': prcp_values} for date, prcp_values in grouped_precipitation.items()}
+
+    return jsonify(result_dict)
 
 # Stations info route
 @app.route('/api/v1.0/stations')
@@ -129,7 +135,7 @@ def tobs():
 
         # Calculate the date one year ago from the last date in the database
         last_date = session.query(func.max(measurement.date)).scalar()
-        last_date = dt.datetime.strptime(last_date, '%Y-%m-%d')
+        last_date = datetime.strptime(last_date, '%Y-%m-%d')
         one_year_ago = last_date - dt.timedelta(days=365)
 
         # Query for temperature observations for the most active station in the last year
@@ -180,7 +186,7 @@ def start_route(start):
     except ValueError:
         return jsonify({'error': 'Invalid date format. Use MM-DD-YYYY.'})
     
-# Custom dynamic route '/api/v1.0/<start>/<end>' to return min, max, and mean temp from a specified date range
+# Custom dynamic route '/api/v1.0/<start>/<end>' to return min, max, and mean temp for a specified date range
 @app.route('/api/v1.0/<start>/<end>')
 def start_end_route(start, end):
     try:
