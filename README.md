@@ -1,6 +1,8 @@
 # sqlalchemy-challenge
  MSU Data Analytics BootCamp Module 10 Challenge
 
+Code files: climate.ipynb and app_climate.py in the repository directory SurfsUp
+
 This repository contains two main files: a Jupyter Notebook analysis of weather data collected from weather stations and Python code for a Flask app that performs a similar set of weather data collection/analysis.
 
 The Notebook code uses Python/SQLalchemy to connect to an SQLite database, use two CSV files to populate the database tables, and performs a series of data analyses and charting with pandas dataframes. The Flask app creates a set of static and dynamic URL routes that perform similar functions to the Jupyter Notebook, but in a very basic web-based format.
