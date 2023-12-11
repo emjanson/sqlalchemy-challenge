@@ -10,10 +10,10 @@ The Notebook code uses Python/SQLalchemy to connect to an SQLite database, use t
 *Code sourcing statement*
 -----------------------
 
-I did use a natural language description of the desired code's functions entered into ChatGPT 3.5 to help with code syntax. I did copy pieces of that code in order to be more efficient, but I tailored it to fit all of the desired functions of this paricular project. I did not directly copy and paste any of this code from the internet otherwise (e.g., from StackExchange or any other webpage). I did not seek any assistance or use code written by my peers or instructors for this challenge.
+I did use a natural language description of the desired code's functions entered into ChatGPT 3.5 to help with code syntax. I did copy pieces of that code in order to be more efficient, but I tailored it to fit all of the desired functions of this particular project. I did not directly copy and paste any of this code from the internet otherwise (e.g., from StackExchange or any other webpage). I did not seek any assistance or use code written by my peers or instructors for this challenge.
 
 End of code sourcing statement.
 
- ----------------------
+-----------------------
 
  The repository also contains the input files needed by the code in a directory called 'Resources'. 
